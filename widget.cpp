@@ -22,17 +22,17 @@ Widget::Widget(QWidget *parent)
 	qDebug() << "App running:" ;
 	ui->maincounter->setStyleSheet("QLabel { background-color : green;margin-right:5px; color : black; border-radius:10px ;}");
 	ui->lcdNumber_2->setPalette(Qt::black);
-	bgplaylist = new QMediaPlaylist(this);
+	bgplaylist = new QMediaPlaylist();
 	// playlist->addMedia(QUrl("qrc:/samples/loop.wav"));
-	bgplaylist->setPlaybackMode(QMediaPlaylist::Loop);
-	bgplaylist->addMedia(QUrl::fromLocalFile("samples/trum.wav"));
 	music2 = new QMediaPlayer(this);
 	// qreal rate = 0.50;
 	//   music2->setMedia(QUrl("qrc:/samples/loop.wav"));
 	//   music2->setPlaybackRate(rate);
 	//music2->setVolume(50);
-	music2->setPlaybackRate(bgrate);
+	//music2->setPlaybackRate(bgrate);
 	music2->setPlaylist(bgplaylist);
+	bgplaylist->setPlaybackMode(QMediaPlaylist::Loop);
+	bgplaylist->addMedia(QUrl("qrc:/samples/loop.wav"));
 	//  music2->play();
     bpc = 3;
     bpcplayed =0;
@@ -309,7 +309,12 @@ void Widget::on_horizontalSlider_sliderReleased()
 
 void Widget::on_btopen_clicked()
 {
-	QString filename = QFileDialog::getOpenFileName(this, tr("Open File"),"./",tr("Media files (*.wav)"));
+
+
+	QString filename = QFileDialog::getOpenFileName(this, tr("Open File"),"/mnt/sdcard",tr("Media files (*.wav,mp3)"));
+
+
+
 
 	if(!filename.isEmpty()) {
 		bgplaylist->clear();
