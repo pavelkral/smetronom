@@ -46,12 +46,13 @@ private slots:
     void changeRate();
     void on_btbgplay_clicked();
     void on_pushButton_4_clicked();
-	void on_horizontalSlider_sliderReleased();
 	void on_btopen_clicked();
 	void on_btmute_clicked();
 
 	void on_dial_valueChanged(int value);
 	void on_dial_2_valueChanged(int value);
+
+	void on_bt_seek_right_clicked();
 
 private:
     Ui::Widget *ui;

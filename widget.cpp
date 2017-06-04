@@ -298,20 +298,13 @@ void Widget::on_pushButton_4_clicked()
 
 }
 
-void Widget::on_horizontalSlider_sliderReleased()
-{
-	qreal vvalue = ui->horizontalSlider->value();
-	bgrate = vvalue/10;
-	music2->setPlaybackRate(bgrate);
-	qDebug() << "rate changed" << bgrate ;
 
-}
 
 void Widget::on_btopen_clicked()
 {
 
 
-	QString filename = QFileDialog::getOpenFileName(this, tr("Open File"),"/mnt/sdcard",tr("Media files (*.wav,mp3)"));
+	QString filename = QFileDialog::getOpenFileName(this, tr("Open File"),"./",tr("Media files (*.mp3)"));
 
 
 
@@ -341,4 +334,10 @@ void Widget::on_dial_valueChanged(int value)
 void Widget::on_dial_2_valueChanged(int value)
 {
 	music2->setVolume(value);
+}
+
+void Widget::on_bt_seek_right_clicked()
+{
+	quint64 pos = music2->position();
+	music2->setPosition(pos + 1000);
 }
