@@ -48,11 +48,10 @@ private slots:
     void on_pushButton_4_clicked();
 	void on_btopen_clicked();
 	void on_btmute_clicked();
-
 	void on_dial_valueChanged(int value);
 	void on_dial_2_valueChanged(int value);
-
 	void on_bt_seek_right_clicked();
+	void openFileNameReady(QString fileName);
 
 private:
     Ui::Widget *ui;

@@ -4,6 +4,8 @@
 #include <math.h>
 #include "widget.h"
 #include "ui_widget.h"
+//#include "androidfiledialog.h"
+#include "dialog.h"
 
 
 Widget::Widget(QWidget *parent)
@@ -43,7 +45,7 @@ Widget::Widget(QWidget *parent)
  //   paused = true;
 
    connect(ui->pushButton_3, SIGNAL(clicked()),this, SLOT(resetsettings()));
-   connect(ui->pushButton_4, SIGNAL(clicked()),this, SLOT(changeRate()));
+  // connect(ui->pushButton_4, SIGNAL(clicked()),this, SLOT(changeRate()));
 }
 //...............................................................................................................
 
@@ -298,23 +300,52 @@ void Widget::on_pushButton_4_clicked()
 
 }
 
-
-
 void Widget::on_btopen_clicked()
 {
 
-
-	QString filename = QFileDialog::getOpenFileName(this, tr("Open File"),"./",tr("Media files (*.mp3)"));
-
-
+	Dialog dlg1;
+	//dlg1.exec();
 
 
-	if(!filename.isEmpty()) {
+	if ( dlg1.exec() == QDialog::Accepted )
+	{
+		QString path1 = dlg1.path;
+		qDebug() << path1;
 		bgplaylist->clear();
-		bgplaylist->addMedia(QUrl::fromLocalFile(filename));
+		bgplaylist->addMedia(QUrl::fromLocalFile(path1));
+
 	}
+	else{
+
+	//QMessageBox::information ( this, "info"," You must create a group first." );
+
+	}
+
+//	QString filename = QFileDialog::getOpenFileName(this, tr("Open File"),"./",tr("Media files (*.mp3)"));
+
+//	if(!filename.isEmpty()) {
+//		bgplaylist->clear();
+//		bgplaylist->addMedia(QUrl::fromLocalFile(filename));
+//	}
+
+//	AndroidFileDialog *fileDialog = new AndroidFileDialog();
+//	connect(fileDialog, SIGNAL(existingFileNameReady(QString)), this, SLOT(openFileNameReady(QString)));
+//	bool success = fileDialog->provideExistingFileName();
+//	if (!success) {
+//		qDebug() << "Problem with JNI or sth like that...";
+//		disconnect(fileDialog, SIGNAL(existingFileNameReady(QString)), this, SLOT(openFileNameReady(QString)));
+//		//or just delete fileDialog instead of disconnect
+//	}
 }
 
+void Widget::openFileNameReady(QString fileName)
+{
+	if (!fileName.isNull()) {
+		qDebug() << "FileName: " << fileName;
+	} else {
+		qDebug() << "User did not choose file";
+	}
+}
 void Widget::on_btmute_clicked()
 {
 	if(ticksmute == false){
