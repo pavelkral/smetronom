@@ -13,7 +13,7 @@ DESTDIR = $$OUT_PWD/bin
 
 SOURCES += main.cpp \
     widget.cpp \ 
-#   androidfiledialog.cpp \
+#  androidfiledialog.cpp \
     dialog.cpp
 
 HEADERS += widget.h \

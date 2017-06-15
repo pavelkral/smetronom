@@ -52,7 +52,7 @@ Widget::Widget(QWidget *parent)
 Widget::~Widget()
 {
   //  delete music;
-    //delete playlist;
+	delete bgplaylist;
 
     delete ui;
 }
@@ -70,7 +70,7 @@ void Widget::timerEvent(QTimerEvent *event)
 
     n = QTime::currentTime();
  //   ui->timeEdit->setTime(n);
-    qDebug() << "Tick:" << n << bpc << timerspeed << fullticks;
+  //  qDebug() << "Tick:" << n << bpc << timerspeed << fullticks;
 
     if(paused != true){
 
@@ -162,14 +162,12 @@ void Widget::keyPressEvent(QKeyEvent *event)
 void Widget::on_pushButton_clicked()
 {
     if(paused){
-
         paused = false;
         mStartTime = QDateTime::currentDateTime();
         ticks = 0;
         bpcplayed = 1;
         bpccomplete = 0;
         timerId = startTimer(timerspeed);
-
         //;xt = QTime::currentTime();
       //  xt = QTime::currentTime().addSecs( 10 );
     }
@@ -183,7 +181,6 @@ void Widget::on_pushButton_clicked()
 void Widget::on_pushButton_2_clicked()
 {
     if(paused){
-
     }
     else{
 
@@ -206,9 +203,7 @@ void Widget::on_spinBox_2_valueChanged(int arg1)
         killTimer(timerId);
          paused = true;
     }
-	ui->maincounter->setText("0");
-    ui->spinBox->setValue(0);
-	ui->lcdNumber_2->display("0:0:0");
+
     mStartTime = QDateTime::currentDateTime();
     ticks = 0;
     bpcplayed = 1;
@@ -217,6 +212,12 @@ void Widget::on_spinBox_2_valueChanged(int arg1)
     double num =  arg/60;
 	qDebug() << "num" << 1000/num;
     timerspeed = 1000/num;
+
+	ui->maincounter->setText("0");
+	ui->spinBox->setValue(0);
+	ui->lcdNumber_2->display("0:0:0");
+
+
 
 }
 
@@ -228,9 +229,7 @@ void Widget::resetsettings()
         killTimer(timerId);
          paused = true;
     }
-	ui->maincounter->setText("0");
-    ui->spinBox->setValue(0);
-	ui->lcdNumber_2->display("0:0:0");
+
     mStartTime = QDateTime::currentDateTime();
     ticks = 0;
     bpcplayed = 1;
@@ -238,6 +237,10 @@ void Widget::resetsettings()
     bpc =  3;
     fullticks = 0;
     timerspeed = 500;
+
+	ui->maincounter->setText("0");
+	ui->spinBox->setValue(0);
+	ui->lcdNumber_2->display("0:0:0");
     ui->spinBox_2->setValue(120);
     ui->spinBox->setValue(bpccomplete);
     ui->spinBox_3->setValue(bpc);
@@ -254,15 +257,18 @@ void Widget::on_spinBox_3_valueChanged(int arg1)
         killTimer(timerId);
          paused = true;
     }
-	ui->maincounter->setText("0");
-    ui->spinBox->setValue(0);
-	ui->lcdNumber_2->display("0:0:0");
-    mStartTime = QDateTime::currentDateTime();
+
     ticks = 0;
     bpcplayed = 1;
     bpccomplete = 0;
     fullticks = 0;
     bpc =  arg1;
+
+
+	ui->maincounter->setText("0");
+	ui->spinBox->setValue(0);
+	ui->lcdNumber_2->display("0:0:0");
+	mStartTime = QDateTime::currentDateTime();
     qDebug() << "bcp changed" ;
 
 }
@@ -277,46 +283,28 @@ void Widget::changeRate()
 
 void Widget::on_btbgplay_clicked()
 {
-
-	//  qreal rate = 1.2;
-    //    music2->setMedia(QUrl("qrc:/samples/loop.wav"));
-    //music2->setPosition(0);
-   //    music2->setPlaybackRate(rate);
 	   music2->stop();
-
 }
 
 void Widget::on_pushButton_4_clicked()
 {
-
- //   music2->setMedia(QUrl("qrc:/samples/loop.wav"));
-  //  qreal rate1 = 1;
-  //  music2->setPlaybackRate(rate1);
-    //    music2->setPlaybackRate(name);
- //  music2->setPlaylist(playlist);
     music2->play();
-    //sleep(2);
-   // changeRate();
 
 }
 
 void Widget::on_btopen_clicked()
 {
 
-	Dialog dlg1;
-	//dlg1.exec();
+	Dialog filedialog;
 
-
-	if ( dlg1.exec() == QDialog::Accepted )
+	if ( filedialog.exec() == QDialog::Accepted )
 	{
-		QString path1 = dlg1.path;
+		QString path1 = filedialog.path;
 		qDebug() << path1;
 		bgplaylist->clear();
 		bgplaylist->addMedia(QUrl::fromLocalFile(path1));
-
 	}
 	else{
-
 	//QMessageBox::information ( this, "info"," You must create a group first." );
 
 	}

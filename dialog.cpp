@@ -23,14 +23,14 @@ Dialog::Dialog(QWidget *parent) :
     dirmodel->setRootPath(sPath);
 
     ui->treeView->setModel(dirmodel);
+	//ui->treeView->setRootIndex(dirmodel->setRootPath("/"));
 	ui->treeView->hideColumn(1);
 	ui->treeView->hideColumn(2);
 	ui->treeView->hideColumn(3);
-    filemodel = new QFileSystemModel(this);
-    filemodel->setFilter(QDir::NoDotAndDotDot | QDir::Files);
-    filemodel->setRootPath(sPath);
 
-    ui->listView->setModel(filemodel);
+
+    filemodel = new QFileSystemModel(this);
+
 
 }
 
@@ -42,6 +42,11 @@ Dialog::~Dialog()
 
 void Dialog::on_treeView_clicked(QModelIndex index)
 {
+	filemodel->setFilter(QDir::NoDotAndDotDot | QDir::Files);
+	//filemodel->setRootPath(sPath);
+
+	ui->listView->setModel(filemodel);
+
     QString sPath = dirmodel->fileInfo(index).absoluteFilePath();
     ui->listView->setRootIndex(filemodel->setRootPath(sPath));
 }
