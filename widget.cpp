@@ -15,45 +15,44 @@ Widget::Widget(QWidget *parent)
 	setWindowTitle("Smetronom");
 	paused = true;
 	music = new QMediaPlayer(this);
-	//  music->setMedia(QUrl("qrc:/samples/clap.wav"));
+	//music->setMedia(QUrl("qrc:/samples/clap.wav"));
 	ticks = 0;
 	mStartTime = QDateTime::currentDateTime();
 	timerspeed = 500;
-	//    timerId = startTimer(timerspeed);
-	// killTimer(timerId);
+	//timerId = startTimer(timerspeed);
+	//killTimer(timerId);
 	qDebug() << "App running:" ;
 	ui->maincounter->setStyleSheet("QLabel { background-color : green;margin-right:5px; color : black; border-radius:10px ;}");
 	ui->lcdNumber_2->setPalette(Qt::black);
 	bgplaylist = new QMediaPlaylist();
 	// playlist->addMedia(QUrl("qrc:/samples/loop.wav"));
 	music2 = new QMediaPlayer(this);
-	// qreal rate = 0.50;
-	//   music2->setMedia(QUrl("qrc:/samples/loop.wav"));
-	//   music2->setPlaybackRate(rate);
+	//qreal rate = 0.50;
+	//music2->setMedia(QUrl("qrc:/samples/loop.wav"));
+	//music2->setPlaybackRate(rate);
 	//music2->setVolume(50);
 	//music2->setPlaybackRate(bgrate);
 	music2->setPlaylist(bgplaylist);
 	bgplaylist->setPlaybackMode(QMediaPlaylist::Loop);
 	bgplaylist->addMedia(QUrl("qrc:/samples/loop.wav"));
-	//  music2->play();
+	//music2->play();
     bpc = 3;
     bpcplayed =0;
     bpccomplete = 0;
     ui->spinBox_2->setValue(120);
     ui->spinBox->setValue(bpccomplete);
-    ui->spinBox_3->setValue(bpc);
- //   paused = true;
+	ui->spinBox_3->setValue(bpc);
+	//paused = true;
 
-   connect(ui->pushButton_3, SIGNAL(clicked()),this, SLOT(resetsettings()));
-  // connect(ui->pushButton_4, SIGNAL(clicked()),this, SLOT(changeRate()));
+	connect(ui->pushButton_3, SIGNAL(clicked()),this, SLOT(resetsettings()));
+	//connect(ui->pushButton_4, SIGNAL(clicked()),this, SLOT(changeRate()));
 }
 //...............................................................................................................
 
 Widget::~Widget()
 {
-  //  delete music;
+  //delete music;
 	delete bgplaylist;
-
     delete ui;
 }
 
@@ -126,35 +125,30 @@ void Widget::keyPressEvent(QKeyEvent *event)
 
        case Qt::Key_P:
        {
-
-             qDebug() << "press P" ;
-                if(paused){
-                   timerId = startTimer(timerspeed);
-                    paused = false;
-                 //   xt = QTime::currentTime();
-                    //xt = QTime::currentTime().addSecs( 10 );
-                }
-                else{
-                  paused = true;
-                 killTimer(timerId);
-//
-                }
+		 qDebug() << "press P" ;
+			if(paused){
+			   timerId = startTimer(timerspeed);
+				paused = false;
+			 //   xt = QTime::currentTime();
+				//xt = QTime::currentTime().addSecs( 10 );
+			}
+			else{
+				paused = true;
+				killTimer(timerId);
+			}
        }
-     break;
-
-         case Qt::Key_Escape:
-        {
-              qApp->exit();
+	   break;
+	   case Qt::Key_Escape:
+	   {
+		   qApp->exit();
            // qApp->quit();
-        }
-        break;
-    default:
-        QWidget::keyPressEvent(event);
+	   }
+	   break;
+	   default:
+			QWidget::keyPressEvent(event);
 
     }
 }
-
-//...............................................................................................................
 
 
 //...............................................................................................................
@@ -168,22 +162,19 @@ void Widget::on_pushButton_clicked()
         bpcplayed = 1;
         bpccomplete = 0;
         timerId = startTimer(timerspeed);
-        //;xt = QTime::currentTime();
-      //  xt = QTime::currentTime().addSecs( 10 );
+	  //xt = QTime::currentTime().addSecs( 10 );
     }
     else{
-
-
     }
 
 }
+//...............................................................................................................
 
 void Widget::on_pushButton_2_clicked()
 {
     if(paused){
     }
     else{
-
       killTimer(timerId);
       paused = true;
 	  ui->maincounter->setText("0");
@@ -192,8 +183,7 @@ void Widget::on_pushButton_2_clicked()
 
     }
 }
-
-
+//...............................................................................................................
 
 void Widget::on_spinBox_2_valueChanged(int arg1)
 {
@@ -217,9 +207,8 @@ void Widget::on_spinBox_2_valueChanged(int arg1)
 	ui->spinBox->setValue(0);
 	ui->lcdNumber_2->display("0:0:0");
 
-
-
 }
+//...............................................................................................................
 
 void Widget::resetsettings()
 {
@@ -244,10 +233,11 @@ void Widget::resetsettings()
     ui->spinBox_2->setValue(120);
     ui->spinBox->setValue(bpccomplete);
     ui->spinBox_3->setValue(bpc);
-    qDebug() << "reset" ;
+	qDebug() << "reset seting" ;
 
 
 }
+//...............................................................................................................
 
 void Widget::on_spinBox_3_valueChanged(int arg1)
 {
@@ -264,7 +254,6 @@ void Widget::on_spinBox_3_valueChanged(int arg1)
     fullticks = 0;
     bpc =  arg1;
 
-
 	ui->maincounter->setText("0");
 	ui->spinBox->setValue(0);
 	ui->lcdNumber_2->display("0:0:0");
@@ -272,6 +261,7 @@ void Widget::on_spinBox_3_valueChanged(int arg1)
     qDebug() << "bcp changed" ;
 
 }
+//...............................................................................................................
 
 void Widget::changeRate()
 {
@@ -280,17 +270,20 @@ void Widget::changeRate()
   //music2->setPosition(0);
      //music2->setPlaybackRate(rate);
 }
+//...............................................................................................................
 
 void Widget::on_btbgplay_clicked()
 {
 	   music2->stop();
 }
+//...............................................................................................................
 
 void Widget::on_pushButton_4_clicked()
 {
     music2->play();
 
 }
+//...............................................................................................................
 
 void Widget::on_btopen_clicked()
 {
@@ -305,7 +298,7 @@ void Widget::on_btopen_clicked()
 		bgplaylist->addMedia(QUrl::fromLocalFile(path1));
 	}
 	else{
-	//QMessageBox::information ( this, "info"," You must create a group first." );
+		//QMessageBox::information ( this, "info"," Choose file." );
 
 	}
 
@@ -325,6 +318,7 @@ void Widget::on_btopen_clicked()
 //		//or just delete fileDialog instead of disconnect
 //	}
 }
+//...............................................................................................................
 
 void Widget::openFileNameReady(QString fileName)
 {
@@ -334,6 +328,8 @@ void Widget::openFileNameReady(QString fileName)
 		qDebug() << "User did not choose file";
 	}
 }
+//...............................................................................................................
+
 void Widget::on_btmute_clicked()
 {
 	if(ticksmute == false){
@@ -345,15 +341,20 @@ void Widget::on_btmute_clicked()
 
 }
 
+//...............................................................................................................
+
 void Widget::on_dial_valueChanged(int value)
 {
 	music->setVolume(value);
 }
+//...............................................................................................................
 
 void Widget::on_dial_2_valueChanged(int value)
 {
 	music2->setVolume(value);
 }
+
+//...............................................................................................................
 
 void Widget::on_bt_seek_right_clicked()
 {

@@ -1,7 +1,7 @@
 
 QT += core gui network xml multimedia
 
-android: QT += androidextras
+#android: QT += androidextras
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,7 +24,6 @@ FORMS += widget.ui \
     dialog.ui
 
 RC_FILE = smetronom.rc
-
 
 
 DISTFILES += \
